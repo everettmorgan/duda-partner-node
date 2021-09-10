@@ -1,10 +1,16 @@
 require('dotenv').config();
 
-const { TEST_SITE_NAME } = require('./helpers');
+const { GetTestSite, DeleteTestSite } = require('./helpers');
 const { Duda, Envs } = require('../dist/base');
 const { v4: uuidv4 } = require("uuid");
 
 let duda;
+let test_site;
+
+before ('create a new site to test against', async function() {
+  this.timeout(10000);
+  test_site = await GetTestSite();
+})
 
 before('instantiate a new Duda instance', function () {
   duda = new Duda({ environment: Envs.Sandbox });
@@ -43,7 +49,7 @@ describe('Duda.reporting', function () {
 
   it('can successfully get a list of form submissions', function () {
     return duda.reporting.forms.submissions({
-      site_name: TEST_SITE_NAME,
+      site_name: test_site,
       from: "2021-01-01",
       to: "2021-12-01",
     })
@@ -52,7 +58,7 @@ describe('Duda.reporting', function () {
   it('can successfully subscribe a customer to a site', function () {
     return duda.reporting.emailSettings.subscribe({
       account_name: account_name,
-      site_name: TEST_SITE_NAME,
+      site_name: test_site,
       frequency: "WEEKLY",
     })
   })
@@ -60,14 +66,14 @@ describe('Duda.reporting', function () {
   it('can successfully get email settings for an account', function () {
     return duda.reporting.emailSettings.get({
       account_name: account_name,
-      site_name: TEST_SITE_NAME,
+      site_name: test_site,
     })
   })
 
   it('can successfully unsubscribe a customer to a site', function () {
     return duda.reporting.emailSettings.unsubscribe({
       account_name: account_name,
-      site_name: TEST_SITE_NAME,
+      site_name: test_site,
     })
   })
 
@@ -80,7 +86,7 @@ describe('Duda.reporting', function () {
   describe('Duda.reporting.analytics', function () {
     it('can successfully get analytics history for a site', function () {
       return duda.reporting.analytics.get({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
         from: "2021-01-01",
         to: "2021-12-01",
         dimension: "system",
@@ -93,7 +99,7 @@ describe('Duda.reporting', function () {
   describe('Duda.reporting.activity', function () {
     it('can successfully get the activity log for a site', function () {
       return duda.reporting.activities.get({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
         limit: 100,
         offset: 0,
         from: "2021-01-01",
@@ -102,4 +108,9 @@ describe('Duda.reporting', function () {
       })
     })
   })
+})
+
+after ('delete the test site', async function() {
+  this.timeout(10000);
+  await DeleteTestSite();
 })

@@ -9,6 +9,7 @@ import { Content } from './resources/content';
 import { Other } from './resources/other';
 import { Page } from './resources/page';
 import { Site } from './resources/site';
+import { Retry } from './retry/retry';
 
 interface CallbackFn {
   (error: string, response: any): any;
@@ -24,6 +25,7 @@ interface AppStoreConstructor {
   environment: APIEnvironments;
   username?: string;
   password?: string;
+  maxNetworkRetries?: number;
 }
 
 interface Response {
@@ -36,6 +38,7 @@ class Duda {
   private username: string;
   private password: string;
   private basePath: string;
+  private maxNetworkRetries: number;
 
   readonly sites: Site;
   readonly pages: Page;
@@ -47,10 +50,12 @@ class Duda {
   readonly reporting: Reporting;
   readonly other: Other;
 
-  constructor(opts: AppStoreConstructor) {
+  constructor(opts?: AppStoreConstructor) {
     this.environment = (opts && opts.environment) ?? APIEnvironments.Direct;
     this.username = (opts && opts.username) ?? process.env.DUDA_API_USER;
     this.password = (opts && opts.password) ?? process.env.DUDA_API_PASS;
+
+    this.maxNetworkRetries = (opts && opts.maxNetworkRetries) ?? 0;
     
     this.basePath = '/api';
     
@@ -65,25 +70,31 @@ class Duda {
     this.collections = new Collection(this);
   }
 
+  static verifyWebhookSignature(): void {
+
+  }
+
   private async request(
     method: string, 
     path: string, 
     body?: any
-  ): Promise<Response> {
+  ): Promise<any> {
     const _body = body ? JSON.stringify(body) : null;
 
-    return new Promise((resolve, reject) => {
-      const req = https.request({
-        method: method,
-        host: this.environment,
-        path: this.basePath + path,
-        auth: this.username + ':' + this.password,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          ...(_body && { 'Content-Length': _body.length })
-        }
-      }, function (res) {
+    const _opts = {
+      method: method,
+      host: this.environment,
+      path: this.basePath + path,
+      auth: this.username + ':' + this.password,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        ...(_body && { 'Content-Length': _body.length })
+      }
+    };
+
+    const retry = new Retry((resolve, reject, $this) => {
+      const req = https.request(_opts, (res) => {
         let data = '';
 
         res.on('data', function (d) {
@@ -95,11 +106,21 @@ class Duda {
           reject(e);
         });
 
-        res.on('end', function () {
-          resolve({
+        res.on('end', () => {
+          const reply = {
             status: res.statusCode,
             response: parseResponse(data)
-          })
+          };
+
+          if (res.statusCode >= 400) {
+            if ($this.attempts < this.maxNetworkRetries) {
+              return resolve($this.reschedule(2000*$this.attempts));
+            } else {
+              reject(reply)
+            }
+          }
+
+          resolve(reply);
         });
       })
       
@@ -108,7 +129,9 @@ class Duda {
       }
 
       req.end();
-    })
+    });
+
+    return retry.schedule();
   }
 
   async get(path: string) {
@@ -125,7 +148,7 @@ class Duda {
 
   async delete(path: string, body: any) {
     return this.request('DELETE', path, body);
-  }
+  } 
 }
 
 function ResponseHandler(res: Response, cb?: CallbackFn) {

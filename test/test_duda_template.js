@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const { Duda, Envs } = require('../dist/base');
-const { TEST_SITE_NAME } = require('./helpers');
 const { v4: uuidv4 } = require("uuid");
 const chai = require('chai');
 const expect = chai.expect;

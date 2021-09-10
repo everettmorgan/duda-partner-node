@@ -1,6 +1,7 @@
 import * as Site from './Site';
 import * as Page from './Page';
 import * as Other from './Other';
+import * as URLRule from './URLRule';
 import * as Account from './Account';
 import * as Content from './Content';
 import * as Template from './Template';
@@ -660,6 +661,53 @@ export class Duda {
         cb?: CallbackFn<Reporting.SubscribeCustomerResponse>
       ): void;
     }
+  }
+
+  urlrules: {
+    getAll(
+      opts: URLRule.GetAllURLRulesPayload
+    ): Promise<URLRule.GetAllURLRulesResponse>;
+
+    getAll(
+      opts: URLRule.GetAllURLRulesPayload,
+      cb?: CallbackFn<URLRule.GetAllURLRulesResponse>
+    ): void;
+
+    get(
+      opts: URLRule.GetURLRuleByIDPayload
+    ): Promise<URLRule.GetURLRuleByIDResponse>;
+
+    get(
+      opts: URLRule.GetURLRuleByIDPayload,
+      cb?: CallbackFn<URLRule.GetURLRuleByIDResponse>
+    ): void;
+
+    create(
+      opts: URLRule.CreateURLRulePayload
+    ): Promise<URLRule.CreateURLRuleResponse>;
+
+    create(
+      opts: URLRule.CreateURLRulePayload,
+      cb?: CallbackFn<URLRule.CreateURLRuleResponse>
+    ): void;
+
+    update(
+      opts: URLRule.UpdateURLRulePayload
+    ): Promise<URLRule.UpdateURLRuleResponse>;
+
+    update(
+      opts: URLRule.UpdateURLRulePayload,
+      cb?: CallbackFn<URLRule.UpdateURLRuleResponse>
+    ): void;
+
+    delete(
+      opts: URLRule.DeleteURLRulePayload
+    ): Promise<URLRule.DeleteURLRuleResponse>;
+
+    delete(
+      opts: URLRule.DeleteURLRulePayload,
+      cb?: CallbackFn<URLRule.DeleteURLRuleResponse>
+    ): void;
   }
 
   other: {

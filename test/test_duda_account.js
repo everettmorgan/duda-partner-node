@@ -1,10 +1,16 @@
 require('dotenv').config();
 
 const { Duda, Envs } = require('../dist/base');
-const { TEST_SITE_NAME } = require('./helpers');
+const { GetTestSite, DeleteTestSite } = require('./helpers');
 const { v4: uuidv4 } = require('uuid');
 
 let duda;
+let test_site;
+
+before ('create a new site to test against', async function() {
+  this.timeout(10000);
+  test_site = await GetTestSite();
+})
 
 beforeEach ('instantiate a new Duda instance', function() {
   duda = new Duda({ environment: Envs.Sandbox });
@@ -62,7 +68,7 @@ describe('Duda.accounts', function() {
     it ('can successfully grant site access for an account by name', function() {
       return duda.accounts.permissions.grantSiteAccess({
         account_name: account_name,
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
         permissions: ["EDIT"],
       })
     })
@@ -74,7 +80,7 @@ describe('Duda.accounts', function() {
     it ('can successfully get site permissions for an account by name', function() {
       return duda.accounts.permissions.get({
         account_name: account_name,
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
       })
     })
 
@@ -86,7 +92,7 @@ describe('Duda.accounts', function() {
 
     it ('can successfully remove site access for an account by name', function() {
       return duda.accounts.permissions.removeSiteAccess({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
         account_name: account_name,
       })
     })
@@ -112,7 +118,7 @@ describe('Duda.accounts', function() {
     it ('can successfully get an SSO link for an account by name', function() {
       return duda.accounts.authentication.getSSOLink({
         account_name: account_name,
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
       })
     })
 
@@ -128,4 +134,9 @@ describe('Duda.accounts', function() {
       })
     })
   })
+})
+
+after ('delete the test site', async function() {
+  this.timeout(10000);
+  await DeleteTestSite();
 })

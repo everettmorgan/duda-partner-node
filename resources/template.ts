@@ -57,6 +57,23 @@ class Template extends Resource {
       },
     }
 
+    this.subactions = {
+      one: {
+        two: {
+          'list': {
+            path: '/',
+            method: 'GET',
+            pathVars: []
+          },
+        },
+        'hello': {
+          path: '/',
+          method: 'GET',
+          pathVars: []
+        }
+      },
+    }
+
     this.excludeFromBody = [];
 
     this.init();

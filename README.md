@@ -118,3 +118,31 @@ duda.templates.list()
     // handle error
   })
 ```
+
+## Configuration
+
+### Initialize with config object
+
+The package can be initialized with several options:
+
+```javascript
+const duda = new Duda({
+  username: 'api-user',
+  password: 'api-pass',
+  maxNetworkRetries: 2
+});
+```
+### Network Retries
+
+Automatic network retries can be enabled with the maxNetworkRetries config option. This will retry requests n times with exponential backoff if they fail due to an intermittent network problem.
+
+```javascript
+const duda = new Duda({
+  ...,
+  maxNetworkRetries: 2
+})
+```
+
+## More Information
+
+- [REST API Reference](https://developer.duda.co/reference#getting-started-with-the-duda-api)

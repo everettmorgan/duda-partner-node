@@ -1,5 +1,7 @@
 import { CallbackFn, Duda, ResponseHandler } from '../base';
 
+const defaultOverride = (args: KeyValue<any>) => args;
+
 type Method = "GET" | "PUT" | "POST" | "DELETE";
 
 type Params = KeyValue<{
@@ -15,7 +17,7 @@ type Action = KeyValue<{
   overrideBody?: OverrideFn;
 }>;
 
-type SubAction = KeyValue<Action>;
+type SubAction = KeyValue<Action | KeyValue<Action | any>>;
 
 interface KeyValue<T> {
   [key: string]: T;
@@ -39,35 +41,37 @@ class Resource {
   }
 
   protected init() {
-    Reflect.ownKeys(this.actions).forEach((action: string) => {
-      const _action = this.actions[action];
-
-      this[action] = this.request.bind(this,
-        _action.method,
-        _action.params,
-        this.path + _action.path,
-        [...this.pathVars, ..._action.pathVars],
-        _action.overrideBody ?? defaultOverride
-      );
+    Reflect.ownKeys(this.actions).forEach((key: string) => {
+      this[key] = this._bind(this.actions[key]);
     });
 
     if (this.subactions) {
-      Reflect.ownKeys(this.subactions).forEach((subaction: string) => {
-        this[subaction] = {};
-
-        Reflect.ownKeys(this.subactions[subaction]).forEach((action: string) => {
-          const _action = this.subactions[subaction][action];
-
-          this[subaction][action] = this.request.bind(this,
-            _action.method,
-            _action.params,
-            this.path + _action.path,
-            [...this.pathVars, ..._action.pathVars],
-            _action.overrideBody ?? defaultOverride
-          );
-        });
+      Reflect.ownKeys(this.subactions).forEach((key: string) => {
+        this[key] = {};
+        this._follow(this[key], this.subactions[key]);
       });
     }
+  }
+
+  private _bind(action) {
+    return this.request.bind(this,
+      action.method,
+      action.params,
+      this.path + action.path,
+      [...this.pathVars, ...action.pathVars],
+      action.overrideBody ?? defaultOverride
+    )
+  }
+
+  private _follow(parent, objs) {
+    Reflect.ownKeys(objs).forEach((obj: string) => {
+      if (!isAction(objs[obj])) {
+        parent[obj] = {};
+        this._follow(parent[obj], objs[obj]);
+      } else {
+        parent[obj] = this._bind(objs[obj]);
+      }
+    })
   }
 
   protected request(
@@ -79,6 +83,7 @@ class Resource {
     args: KeyValue<any>,
     cb?: CallbackFn
   ) {
+    // enabled methods to be called without args: method(function() { ... }).
     if (typeof args === 'function' && !vars.length) {
       const _method = method.toLowerCase();
       return this.duda[_method](path).then(
@@ -86,12 +91,14 @@ class Resource {
       );
     }
 
+    // ensure all required variables are present in args.
     vars.forEach((required) => {
       if (!Reflect.has(args, required)) {
         throw new Error(`'${required}' is required to call ${method} ${path}.`);
       }
     })
 
+    // ensure all required parameters are present and concatenate.
     let _params = '?';
 
     if (params) {
@@ -105,8 +112,10 @@ class Resource {
       });
     }
 
+    // interpolate the path and append URL params
     const _path = interpolate(path, args) + _params;
 
+    // remove unwanted keys from request body
     if (args) {
       this.excludeFromBody.forEach((exclude: string) => {
         if (Reflect.has(args as object, exclude)) {
@@ -115,8 +124,10 @@ class Resource {
       });
     }
 
+    // apply any request body overrides, otherwise, just use args.
     const body = override(args);
 
+    // determine method and send off the request
     switch (method) {
       case 'GET':
         return this.duda.get(_path).then(
@@ -138,8 +149,6 @@ class Resource {
   }
 }
 
-const defaultOverride = (args: KeyValue<any>) => args;
-
 function interpolate(str: string, vals: KeyValue<string>) {
   const exp = new RegExp('{[^}]+}', 'g');
   const matches = str.matchAll(exp);
@@ -148,6 +157,10 @@ function interpolate(str: string, vals: KeyValue<string>) {
     str = str.replace(match[0], vals[key]);
   }
   return str;
+}
+
+function isAction(a): a is Action {
+  return 'path' in a && 'method' in a && 'pathVars' in a;
 }
 
 export { Resource };

@@ -1,13 +1,19 @@
 require('dotenv').config();
 
 const { Duda, Envs } = require('../dist/base');
-const { TEST_SITE_NAME } = require("./helpers");
+const { GetTestSite, DeleteTestSite } = require('./helpers');
 const { v4: uuidv4 } = require('uuid');
 
 const sinon = require('sinon');
 const { expect } = require('chai');
 
 let duda;
+let test_site;
+
+before ('create a new site to test against', async function() {
+  this.timeout(10000);
+  test_site = await GetTestSite();
+})
 
 beforeEach('instantiate a new Duda instance', function () {
   duda = new Duda({ environment: Envs.Sandbox });
@@ -19,7 +25,7 @@ describe('Duda.other', function () {
 
     it('can sucessfully get all backups for a site', function () {
       return duda.other.backups.list({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
       })
     })
 
@@ -27,21 +33,21 @@ describe('Duda.other', function () {
 
     it('can successfully create a backup for a site', function () {
       return duda.other.backups.create({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
         name: backup_name,
       })
     })
 
     it('can successfully restore a backup for a site', function () {
       return duda.other.backups.restore({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
         backup_name: backup_name,
       })
     })
 
     it('can successfully delete a backup for a site', function () {
       return duda.other.backups.delete({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
         backup_name: backup_name,
       })
     })
@@ -55,7 +61,7 @@ describe('Duda.other', function () {
     it('can successfully generate an ssl cert for a site', function () {
       const spy = sinon.spy(duda.other.ssl, "create");
       duda.other.ssl.create({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
       }).catch((error) => { });
       expect(spy.called).to.equal(true);
     })
@@ -63,7 +69,7 @@ describe('Duda.other', function () {
     it('can successfully renew an ssl cert for a site', function () {
       const spy = sinon.spy(duda.other.ssl, "renew");
       duda.other.ssl.renew({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
       }).catch((error) => { });
       expect(spy.called).to.equal(true);
     })
@@ -71,9 +77,14 @@ describe('Duda.other', function () {
     it('can successfully delete an ssl cert for a site', function () {
       const spy = sinon.spy(duda.other.ssl, "delete");
       duda.other.ssl.delete({
-        site_name: TEST_SITE_NAME,
+        site_name: test_site,
       }).catch((error) => { });
       expect(spy.called).to.equal(true);
     })
   })
+})
+
+after ('delete the test site', async function() {
+  this.timeout(10000);
+  await DeleteTestSite();
 })

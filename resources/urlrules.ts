@@ -35,7 +35,7 @@ class URLRule extends Resource {
 
       'delete': {
         path: '/{id}',
-        method: 'POST',
+        method: 'DELETE',
         pathVars: ['id']
       },
     }
