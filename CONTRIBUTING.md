@@ -10,6 +10,8 @@ An object that contains all of Duda's API environment and their respective base 
 
 ### Types
 
+An object that contains all of the Types defined for this package.
+
 ### Duda
 
 The `Duda` class is both the default and a named export of the package. It houses all of the defined API resources and their associated methods. 
