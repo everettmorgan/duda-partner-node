@@ -501,15 +501,28 @@ import * as Example from './Example';
 export class Duda {
   example: {
     // add both the promise and callback version of a method
-    get(): Promise<Example.GetExamplePayload>;
-    get(cb?: CallbackFn<GetExampleResponse>); 
+    get(
+      opts: Example.GetExamplePayload
+    ): Promise<Example.GetExampleResponse>;
 
-    update(): Promise<Example.UpdateExamplePayload>;
-    update(cb?: CallbackFn<UpdateExampleResponse>); 
+    get(
+      opts: Example.GetExamplePayload, 
+      cb?: CallbackFn<Example.GetExampleResponse>
+    ): void;
+
+    update(
+      opts: Example.UpdateExamplePayload
+    ): Promise<Example.UpdateExamplePayload>;
+
+    update(
+      opts: Example.UpdateExamplePayload
+      cb?: CallbackFn<Example.UpdateExampleResponse>
+    ): void; 
 
     child: {
       list(): Promise<Example.ListExamplesResponse>;
-      list(cb?: CallbackFn<ListExampleResponse>); 
+
+      list(cb?: CallbackFn<ListExampleResponse>): void;
     }
   }
 
