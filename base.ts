@@ -21,7 +21,7 @@ enum APIEnvironments {
   EU = 'eu-sandbox.duda.co',
 }
 
-interface AppStoreConstructor {
+interface PartnerConstructor {
   environment: APIEnvironments;
   username?: string;
   password?: string;
@@ -34,11 +34,11 @@ interface Response {
 }
 
 class Duda {
-  private environment: APIEnvironments;
   private username: string;
   private password: string;
   private basePath: string;
   private maxNetworkRetries: number;
+  private environment: APIEnvironments;
 
   readonly sites: Site;
   readonly pages: Page;
@@ -50,7 +50,7 @@ class Duda {
   readonly reporting: Reporting;
   readonly other: Other;
 
-  constructor(opts?: AppStoreConstructor) {
+  constructor(opts?: PartnerConstructor) {
     this.environment = (opts && opts.environment) ?? APIEnvironments.Direct;
     this.username = (opts && opts.username) ?? process.env.DUDA_API_USER;
     this.password = (opts && opts.password) ?? process.env.DUDA_API_PASS;

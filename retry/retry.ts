@@ -92,6 +92,8 @@ export class Retry {
                 return "completed";
             case status.Failed:
                 return "failed";
+            case status.Stopped:
+                return "stopped";
         }
     }
 

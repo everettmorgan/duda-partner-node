@@ -97,11 +97,14 @@ describe("Retry", function() {
     const three = retry.status;
     retry.status = 4;
     const four = retry.status;
+    retry.status = 5;
+    const five = retry.status;
 
     expect(zero).to.equal('idle') &&
-    expect(two).to.equal('scheduled') &&
-    expect(three).to.equal('retrying') &&
-    expect(four).to.equal('completed') &&
-    expect(four).to.equal('failed');
+    expect(one).to.equal('scheduled') &&
+    expect(two).to.equal('retrying') &&
+    expect(three).to.equal('completed') &&
+    expect(four).to.equal('failed') &&
+    expect(five).to.equal('stopped');
   })
 })
