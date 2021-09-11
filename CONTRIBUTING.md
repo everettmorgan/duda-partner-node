@@ -399,18 +399,20 @@ export { Example as default, Example };
 > NOTE: Now, create a new file under `/types` (e.g `/types/Example.d.ts`)
 
 ```typescript
-export interface GetExamplesPayload {
+type ListExamplesResponse = Array<GetExampleResponse>;
+
+export interface GetExamplePayload {
   id: string;
 }
 
-export interface GetExamplesResponse {
+export interface GetExampleResponse {
   id: string;
   name: string;
   email: string;
   age: number;
 }
 
-export interface UpdateExamplesPayload {
+export interface UpdateExamplePayload {
   id: string;
   changeset: {
     name: string;
@@ -453,7 +455,7 @@ export as namespace Types;
 
 ### 9. Add the new Resource to `Duda`
 
-> NOTE: Finally, open the file `/base.ts`
+> NOTE: Now, open the file `/base.ts`
 
 ```typescript
 import { Example } from './resources/Example';
@@ -478,13 +480,62 @@ import { Example } from './resources/Example';
 // ...
 ```
 
-### 10. Validate all tests pass
+### 10. Add the method definitions to `/types/index.d.ts`
+
+```typescript
+import * as Site from './Site';
+import * as Page from './Page';
+import * as Other from './Other';
+import * as URLRule from './URLRule';
+import * as Account from './Account';
+import * as Content from './Content';
+import * as Template from './Template';
+import * as Reporting from './Reporting';
+import * as Collection from './Collection';
+
+// import types from your Resource
+import * as Example from './Example';
+
+// ...
+
+export class Duda {
+  example: {
+    // add both the promise and callback version of a method
+    get(): Promise<Example.GetExamplePayload>;
+    get(cb?: CallbackFn<GetExampleResponse>); 
+
+    update(): Promise<Example.UpdateExamplePayload>;
+    update(cb?: CallbackFn<UpdateExampleResponse>); 
+
+    child: {
+      list(): Promise<Example.ListExamplesResponse>;
+      list(cb?: CallbackFn<ListExampleResponse>); 
+    }
+  }
+
+  sites: {
+    /**
+     * Get a Duda site by name.
+     */
+    get(
+      opts: Site.GetSiteByNamePayload
+    ): Promise<Site.GetSiteResponse>;
+
+    get(
+      opts: Site.GetSiteByNamePayload,
+      cb?: CallbackFn<Site.GetSiteResponse>
+    ): void;
+
+  // ...
+```
+
+### 11. Validate all tests pass
 
 ```bash
 npm run test
 ```
 
-### 11. Crack a beer, you're done!
+### 12. Crack a beer, you're done!
 
 ---
 
