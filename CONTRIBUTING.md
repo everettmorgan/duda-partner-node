@@ -155,19 +155,19 @@ e.g.
 
 ## Extension Workflow
 
-There are four tasks that are required to successfully extend the library: implement the resource, write tests, write types, and add the new resource to the `Duda` class.
+There are four tasks that are required to successfully extend the library: write tests, implement the resource, write types, and add the new resource.
 
-### 1. Implement the resource
+### 1. Write tests
+
+Tests are **required** for all Resources. This ensures the underlying generator is interpreting the Resource correctly. It's highly recommended to follow the TDD framework.
+
+### 2. Implement the resource
 
 Please see the example section for more details.
 
-### 2. Write types
+### 3. Write types
 
 Types are **required** for all Resources. This provides end users of the package with a rich (and frankly, usable) experience via IDE intellisense. This is non-negotiable and PRs without types included will be rejected upon submission.
-
-### 3. Write tests
-
-Tests are **required** for all Resources. This ensures the underlying generator is interpreting the Resource correctly. It's highly recommended to follow the TDD framework.
 
 ### 4. Add the new resource
 
