@@ -558,5 +558,3 @@ npm run test
 $ npm install
 $ npm run test
 ```
-
-If you do not have npm installed, you can get it by following [the NVM install instructions](https://github.com/nvm-sh/nvm#installing-and-updating).
