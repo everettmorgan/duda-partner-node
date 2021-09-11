@@ -46,11 +46,11 @@ e.g.
 An object that contains all of the Resource's methods and the underlying configuration for each. It has several values that are available to define the method.
 
 - `actions[key]`: the name of the method that's accessed by developers
-- `actions[key]`.method: the REST method used
-- `actions[key]`.path: the path of the method, relative to the Resource's own base path
-- `actions[key]`.pathVars: an array of the expected path variables
-- `actions[key]`.params: an object containing the available URL parameters
-- `actions[key]`.overrideBody: a function to form the request body before send
+- `actions[key].method`: the REST method used
+- `actions[key].path`: the path of the method, relative to the Resource's own base path
+- `actions[key].pathVars`: an array of the expected path variables
+- `actions[key].params`: an object containing the available URL parameters
+- `actions[key].overrideBody`: a function to form the request body before send
 
 e.g.
 ```javascript
