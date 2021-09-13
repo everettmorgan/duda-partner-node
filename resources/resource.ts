@@ -131,19 +131,23 @@ class Resource {
     switch (method) {
       case 'GET':
         return this.duda.get(_path).then(
-          (res) => ResponseHandler(res, cb)
+          (res) => ResponseHandler(res, cb),
+          (err) => ResponseHandler(err, cb)
         );
       case 'PUT':
         return this.duda.put(_path, body).then(
-          (res) => ResponseHandler(res, cb)
+          (res) => ResponseHandler(res, cb),
+          (err) => ResponseHandler(err, cb)
         );
       case 'POST':
         return this.duda.post(_path, body).then(
-          (res) => ResponseHandler(res, cb)
+          (res) => ResponseHandler(res, cb),
+          (err) => ResponseHandler(err, cb)
         );
       case 'DELETE':
         return this.duda.delete(_path, body).then(
-          (res) => ResponseHandler(res, cb)
+          (res) => ResponseHandler(res, cb),
+          (err) => ResponseHandler(err, cb)
         );
     }
   }

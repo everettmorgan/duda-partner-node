@@ -49,26 +49,25 @@ export type UpdateAccountResponse = void;
 export type DeleteAccountResponse = void;
 export type GetPermissionsResponse = Array<Permissions>;
 
-export enum Permissions {
-  STATS_TAB = 'STATS_TAB',
-  EDIT = 'EDIT',
-  E_COMMERCE = 'E_COMMERCE',
-  PUBLISH = 'PUBLISH',
-  REPUBLISH = 'REPUBLISH',
-  DEV_MODE = 'DEV_MODE',
-  INSITE = 'INSITE',
-  SEO = 'SEO',
-  BACKUPS = 'BACKUPS',
-  CUSTOM_DOMAIN = 'CUSTOM_DOMAIN',
-  RESET = 'RESET',
-  BLOG = 'BLOG',
-  PUSH_NOTIFICATIONS = 'PUSH_NOTIFICATIONS',
-  LIMITED_EDITING = 'LIMITED_EDITING',
-  SITE_COMMENTS = 'SITE_COMMENTS',
-  CONTENT_LIBRARY = 'CONTENT_LIBRARY',
-  USE_APP = 'USE_APP',
-  CLIENT_MANAGE_FREE_APPS = 'CLIENT_MANAGE_FREE_APPS',
-}
+export type Permissions = 
+  'STATS_TAB' |
+  'EDIT' |
+  'E_COMMERCE' |
+  'PUBLISH' |
+  'REPUBLISH' |
+  'DEV_MODE' |
+  'INSITE' |
+  'SEO' |
+  'BACKUPS' |
+  'CUSTOM_DOMAIN' |
+  'RESET' |
+  'BLOG' |
+  'PUSH_NOTIFICATIONS' |
+  'LIMITED_EDITING' |
+  'SITE_COMMENTS' |
+  'CONTENT_LIBRARY' |
+  'USE_APP' |
+  'CLIENT_MANAGE_FREE_APPS';
 
 export type ListAccessibleSitesResponse = Array<{
   site_name: string;

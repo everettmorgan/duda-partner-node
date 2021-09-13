@@ -130,6 +130,7 @@ const duda = new Duda({
   username: 'api-user',
   password: 'api-pass',
   maxNetworkRetries: 2
+  environment: Duda.Environments.Sandbox, // also, .Direct, .EU
 });
 ```
 ### Network Retries

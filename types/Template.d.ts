@@ -4,6 +4,10 @@ export type DeleteTemplateResponse = void;
 export type ListTemplatesResponse = Array<Template>;
 export type GetTemplateResponse = Template;
 
+export type ListTemplatesPayload = {
+  lang?: string;
+}
+
 export interface CreateFromResponse {
   template_name: string,
   preview_url: string,
