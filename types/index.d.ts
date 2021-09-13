@@ -10,11 +10,28 @@ import * as Collection from './Collection';
 
 export * as Types from './types';
 
+type APIEnvironment = "api.duda.co" | "api-sandbox.duda.co" | "api.eu.duda.co";
+
+interface PartnerConstructor {
+  environment?: APIEnvironment;
+  username?: string;
+  password?: string;
+  maxNetworkRetries?: number;
+}
+
 export interface CallbackFn<T> {
   (error: string, response: T): any;
 }
 
 export class Duda {
+  constructor(opts: PartnerConstructor);
+
+  static Environments: {
+    EU: 'api.eu.duda.co';
+    Direct: 'api.duda.co';
+    Sandbox: 'api-sandbox.duda.co';
+  }
+
   sites: {
     /**
      * Get a Duda site by name.
@@ -48,7 +65,7 @@ export class Duda {
     ): Promise<Site.CreateSiteResponse>;
 
     create(
-      opts: Site.UpdateSitePayload,
+      opts: Site.CreateSitePayload,
       cb?: CallbackFn<Site.CreateSiteResponse>
     ): void;
 
@@ -516,13 +533,17 @@ export class Duda {
 
   templates: {
     list(
-      opts: Template.ListTemplatesResponse,
+      opts: Template.ListTemplatesPayload,
     ): Promise<Template.ListTemplatesResponse>;
 
     list(
-      opts: Template.ListTemplatesResponse,
+      opts: Template.ListTemplatesPayload,
       cb?: CallbackFn<Template.ListTemplatesResponse>
     ): void;
+
+    list(): Promise<Template.ListTemplatesResponse>;
+
+    list(cb?: CallbackFn<Template.ListTemplatesResponse>): void;
 
     get(
       opts: Template.GetTemplatePayload,
@@ -663,7 +684,7 @@ export class Duda {
     }
   }
 
-  urlrules: {
+  urlRules: {
     getAll(
       opts: URLRule.GetAllURLRulesPayload
     ): Promise<URLRule.GetAllURLRulesResponse>;

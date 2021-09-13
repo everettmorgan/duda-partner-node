@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 let duda;
 
 before ('instantiate a new Duda instance', function() {
-    duda = new Duda({ environment: Envs.Sandbox });
+    duda = new Duda({ environment: Duda.Environments.Sandbox });
 })
 
 describe('Duda.sites', function() {

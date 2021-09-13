@@ -12,7 +12,7 @@ before ('create a new site to test against', async function() {
 })
 
 beforeEach ('instantiate a new Duda instance', async function() {
-  duda = new Duda({ environment: Envs.Sandbox });
+  duda = new Duda({ environment: Duda.Environments.Sandbox });
 })
 
 describe('Duda.urlrules', function() {

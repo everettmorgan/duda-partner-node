@@ -1,9 +1,10 @@
 require('dotenv').config();
 
-const { Duda, Envs } = require('../dist/base')
+const { Duda } = require('../dist/base');
+
 const duda = new Duda({ 
-    environment: Envs.Sandbox,
-    maxNetworkRetries: 5
+    maxNetworkRetries: 2, 
+    environment: Duda.Environments.Sandbox 
 });
 
 let test_site_name;

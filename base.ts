@@ -15,14 +15,10 @@ interface CallbackFn {
   (error: string, response: any): any;
 }
 
-enum APIEnvironments {
-  Direct = 'api.duda.co',
-  Sandbox = 'api-sandbox.duda.co',
-  EU = 'eu-sandbox.duda.co',
-}
+type APIEnvironment = "api.duda.co" | "api-sandbox.duda.co" | "api.eu.duda.co";
 
 interface PartnerConstructor {
-  environment: APIEnvironments;
+  environment: APIEnvironment;
   username?: string;
   password?: string;
   maxNetworkRetries?: number;
@@ -37,8 +33,8 @@ class Duda {
   private username: string;
   private password: string;
   private basePath: string;
+  private environment: string;;
   private maxNetworkRetries: number;
-  private environment: APIEnvironments;
 
   readonly sites: Site;
   readonly pages: Page;
@@ -51,7 +47,7 @@ class Duda {
   readonly other: Other;
 
   constructor(opts?: PartnerConstructor) {
-    this.environment = (opts && opts.environment) ?? APIEnvironments.Direct;
+    this.environment = (opts && opts.environment) ?? Duda.Environments.Direct;
     this.username = (opts && opts.username) ?? process.env.DUDA_API_USER;
     this.password = (opts && opts.password) ?? process.env.DUDA_API_PASS;
 
@@ -70,8 +66,12 @@ class Duda {
     this.collections = new Collection(this);
   }
 
-  static verifyWebhookSignature(): void {
-
+  static get Environments() {
+    return { 
+      EU: 'api.eu.duda.co', 
+      Direct: 'api.duda.co', 
+      Sandbox: 'api-sandbox.duda.co' 
+    };
   }
 
   private async request(
@@ -177,4 +177,4 @@ function parseResponse(data: string) {
   }
 }
 
-export { Duda as default, Duda, APIEnvironments as Envs, CallbackFn, ResponseHandler };
+export { Duda as default, Duda, CallbackFn, ResponseHandler };

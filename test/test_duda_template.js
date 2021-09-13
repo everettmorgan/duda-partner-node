@@ -9,7 +9,7 @@ chai.use(require('chai-as-promised'));
 let duda;
 
 before('instantiate Duda instance', function () {
-  duda = new Duda({ environment: Envs.Sandbox });
+  duda = new Duda({ environment: Duda.Environments.Sandbox });
 })
 
 describe('Duda.templates', function () {
