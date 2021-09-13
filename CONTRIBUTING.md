@@ -347,7 +347,7 @@ class Example extends Resource {
 }
 ```
 
-### 6. Export the new Resource as both the `default` and a named export
+### 6. Export the new Resource as both the `default` and a named export, and call `init`
 
 ```typescript
 import { Resource } from './resource';
@@ -390,6 +390,8 @@ class Example extends Resource {
     }
 
     this.excludeFromBody = [];
+
+    this.init();
   }
 }
 
