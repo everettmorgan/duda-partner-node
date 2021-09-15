@@ -18,7 +18,7 @@ interface CallbackFn {
 type APIEnvironment = "api.duda.co" | "api-sandbox.duda.co" | "api.eu.duda.co";
 
 interface PartnerConstructor {
-  env: APIEnvironment;
+  env?: APIEnvironment;
   user?: string;
   pass?: string;
   maxNetworkRetries?: number;
@@ -50,6 +50,10 @@ class Duda {
     this.environment = (opts && opts.env) ?? Duda.Environments.Direct;
     this.username = (opts && opts.user) ?? process.env.DUDA_API_USER;
     this.password = (opts && opts.pass) ?? process.env.DUDA_API_PASS;
+
+    if (!this.username || !this.password) {
+      throw new Error('API user and/or pass are undefined.');
+    }
 
     this.maxNetworkRetries = (opts && opts.maxNetworkRetries) ?? 0;
     

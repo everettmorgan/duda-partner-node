@@ -99,9 +99,11 @@ class Resource {
     })
 
     // ensure all required parameters are present and concatenate.
-    let _params = '?';
+    let _params;
 
     if (params) {
+      _params = '?';
+
       Reflect.ownKeys(params).forEach((param: string) => {
         if (params[param].required && !args[param]) {
           throw new Error(`${param} required to call ${method} ${path}.`);
@@ -113,7 +115,9 @@ class Resource {
     }
 
     // interpolate the path and append URL params
-    const _path = interpolate(path, args) + _params;
+    const _path = _params 
+      ? interpolate(path, args) + _params
+      : interpolate(path, args);``
 
     // remove unwanted keys from request body
     if (args) {

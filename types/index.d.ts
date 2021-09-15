@@ -13,9 +13,9 @@ export * as Types from './types';
 type APIEnvironment = "api.duda.co" | "api-sandbox.duda.co" | "api.eu.duda.co";
 
 interface PartnerConstructor {
-  environment?: APIEnvironment;
-  username?: string;
-  password?: string;
+  env?: APIEnvironment;
+  user?: string;
+  pass?: string;
   maxNetworkRetries?: number;
 }
 
@@ -24,7 +24,7 @@ export interface CallbackFn<T> {
 }
 
 export class Duda {
-  constructor(opts: PartnerConstructor);
+  constructor(opts?: PartnerConstructor);
 
   static Environments: {
     EU: 'api.eu.duda.co';
