@@ -9,7 +9,7 @@ const { Duda } = require('../dist/base');
 let duda;
 
 before('instantiate Duda instance', function () {
-  duda = new Duda({ env: "sandbox" });
+  duda = new Duda({ env: Duda.Environments.Sandbox });
 })
 
 describe('Duda', function () {

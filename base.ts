@@ -18,9 +18,9 @@ interface CallbackFn {
 type APIEnvironment = "api.duda.co" | "api-sandbox.duda.co" | "api.eu.duda.co";
 
 interface PartnerConstructor {
-  environment: APIEnvironment;
-  username?: string;
-  password?: string;
+  env: APIEnvironment;
+  user?: string;
+  pass?: string;
   maxNetworkRetries?: number;
 }
 
@@ -47,9 +47,9 @@ class Duda {
   readonly other: Other;
 
   constructor(opts?: PartnerConstructor) {
-    this.environment = (opts && opts.environment) ?? Duda.Environments.Direct;
-    this.username = (opts && opts.username) ?? process.env.DUDA_API_USER;
-    this.password = (opts && opts.password) ?? process.env.DUDA_API_PASS;
+    this.environment = (opts && opts.env) ?? Duda.Environments.Direct;
+    this.username = (opts && opts.user) ?? process.env.DUDA_API_USER;
+    this.password = (opts && opts.pass) ?? process.env.DUDA_API_PASS;
 
     this.maxNetworkRetries = (opts && opts.maxNetworkRetries) ?? 0;
     

@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const { GetTestSite, DeleteTestSite } = require('./helpers');
-const { Duda, Envs } = require('../dist/base');
+const { Duda } = require('../dist/base');
 const { v4: uuidv4 } = require("uuid");
 
 let duda;
@@ -13,7 +13,7 @@ before ('create a new site to test against', async function() {
 })
 
 before('instantiate a new Duda instance', function () {
-  duda = new Duda({ environment: Duda.Environments.Sandbox });
+  duda = new Duda({ env: Duda.Environments.Sandbox });
 })
 
 describe('Duda.reporting', function () {

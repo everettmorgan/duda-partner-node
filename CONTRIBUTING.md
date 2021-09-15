@@ -190,7 +190,7 @@ In this section, we're going to add a new Resource with a few methods and attach
 ```typescript
 require('dotenv').config();
 
-const { Duda, Envs } = require('../dist/base');
+const { Duda } = require('../dist/base');
 const { GetTestSite, DeleteTestSite } = require('./helpers');
 const { v4: uuidv4 } = require('uuid');
 
@@ -205,7 +205,7 @@ before ('create a new site to test against', async function() {
 // -*
 
 beforeEach ('instantiate a new Duda instance', function() {
-  duda = new Duda({ environment: Duda.Environments.Sandbox });
+  duda = new Duda({ env: Duda.Environments.Sandbox });
 })
 
 describe('Duda.example', function() {

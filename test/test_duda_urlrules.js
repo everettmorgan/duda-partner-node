@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { Duda, Envs } = require('../dist/base');
+const { Duda } = require('../dist/base');
 const { GetTestSite, DeleteTestSite } = require('./helpers');
 
 let duda;
@@ -12,7 +12,7 @@ before ('create a new site to test against', async function() {
 })
 
 beforeEach ('instantiate a new Duda instance', async function() {
-  duda = new Duda({ environment: Duda.Environments.Sandbox });
+  duda = new Duda({ env: Duda.Environments.Sandbox });
 })
 
 describe('Duda.urlrules', function() {

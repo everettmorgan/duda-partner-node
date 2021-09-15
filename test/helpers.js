@@ -4,7 +4,7 @@ const { Duda } = require('../dist/base');
 
 const duda = new Duda({ 
     maxNetworkRetries: 2, 
-    environment: Duda.Environments.Sandbox 
+    env: Duda.Environments.Sandbox 
 });
 
 let test_site_name;
