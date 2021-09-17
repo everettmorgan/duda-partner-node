@@ -1,3 +1,4 @@
+import * as Plan from './Plan';
 import * as Site from './Site';
 import * as Page from './Page';
 import * as Other from './Other';
@@ -30,6 +31,33 @@ export class Duda {
     EU: 'api.eu.duda.co';
     Direct: 'api.duda.co';
     Sandbox: 'api-sandbox.duda.co';
+  }
+
+  plans: {
+    list(
+    ): Promise<Plan.ListPlanResponse>;
+
+    list(
+      cb?: CallbackFn<Plan.ListPlanResponse>
+    ): void;
+
+    get(
+        opts: Plan.GetPlanPayload
+      ): Promise<Plan.GetPlanResponse>;
+  
+    get(
+      opts: Plan.GetPlanPayload,
+      cb?: CallbackFn<Plan.GetPlanResponse>
+    ): void;
+
+    update(
+      opts: Plan.ChangePlanPayload
+    ): Promise<Plan.ChangePlanResponse>;
+
+    update(
+      opts: Plan.ChangePlanPayload,
+      cb?: CallbackFn<Plan.ChangePlanResponse>
+    ): void;
   }
 
   sites: {

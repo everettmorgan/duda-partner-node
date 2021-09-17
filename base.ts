@@ -7,6 +7,7 @@ import { Account } from './resources/account';
 import { URLRule } from './resources/urlrules';
 import { Content } from './resources/content';
 import { Other } from './resources/other';
+import { Plan } from './resources/plan';
 import { Page } from './resources/page';
 import { Site } from './resources/site';
 import { Retry } from './retry/retry';
@@ -38,6 +39,7 @@ class Duda {
 
   readonly sites: Site;
   readonly pages: Page;
+  readonly plans: Plan;
   readonly content: Content;
   readonly accounts: Account;
   readonly templates: Template;
@@ -62,6 +64,7 @@ class Duda {
     this.sites = new Site(this);
     this.pages = new Page(this);
     this.other = new Other(this);
+    this.plans = new Plan(this);
     this.content = new Content(this);
     this.urlRules = new URLRule(this);
     this.accounts = new Account(this);
