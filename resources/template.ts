@@ -52,7 +52,7 @@ class Template extends Resource {
 
       'delete': {
         path: '/{template_id}',
-        method: 'GET',
+        method: 'DELETE',
         pathVars: ['template_id']
       },
     }
