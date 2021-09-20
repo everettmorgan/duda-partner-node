@@ -102,13 +102,12 @@ class Resource {
     let _params;
 
     if (params) {
-      _params = '?';
-
       Reflect.ownKeys(params).forEach((param: string) => {
         if (params[param].required && !args[param]) {
           throw new Error(`${param} required to call ${method} ${path}.`);
         }
         if (args && Reflect.has(args as object, param)) {
+          if (!_params) _params = '?';
           _params += `${params[param].alias ?? param}=${args[param]}&`;
         }
       });
