@@ -87,7 +87,8 @@ class Resource {
     if (typeof args === 'function' && !vars.length) {
       const _method = method.toLowerCase();
       return this.duda[_method](path).then(
-        (res => ResponseHandler(res, args as CallbackFn))
+        (res => ResponseHandler(res, args as CallbackFn)),
+        (err => ResponseHandler(err, args as CallbackFn))
       );
     }
 
@@ -116,7 +117,7 @@ class Resource {
     // interpolate the path and append URL params
     const _path = _params 
       ? interpolate(path, args) + _params
-      : interpolate(path, args);``
+      : interpolate(path, args);
 
     // remove unwanted keys from request body
     if (args) {

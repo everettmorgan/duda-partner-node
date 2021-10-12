@@ -1,6 +1,6 @@
 {
   "name": "@dudadev/partner-api",
-  "version": "1.3.6",
+  "version": "1.3.10",
   "description": "Provides convenient access to the Duda Partner API from applications writting in server-side Javascript.",
   "files": [
     "dist",

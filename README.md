@@ -36,8 +36,8 @@ const duda = new Duda();
 
 // uses the provided `user` and `pass`
 const duda = new Duda({
-    username: "username",
-    password: "password",
+    user: "username",
+    pass: "password",
 });
 
 // then() / catch()
@@ -127,9 +127,9 @@ The package can be initialized with several options:
 
 ```javascript
 const duda = new Duda({
-  username: 'api-user',
-  password: 'api-pass',
-  maxNetworkRetries: 2
+  user: 'api-user',
+  pass: 'api-pass',
+  maxNetworkRetries: 2,
   env: Duda.Environments.Sandbox, // also, .Direct, .EU
 });
 ```

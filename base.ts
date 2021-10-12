@@ -96,6 +96,7 @@ class Duda {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'User-Agent': 'd-node-api-library',
         ...(_body && { 'Content-Length': _body.length })
       }
     };
@@ -123,7 +124,7 @@ class Duda {
             if ($this.attempts < this.maxNetworkRetries) {
               return resolve($this.reschedule(2000*$this.attempts));
             } else {
-              reject(reply)
+              reject(reply);
             }
           }
 
