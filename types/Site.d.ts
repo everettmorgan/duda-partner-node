@@ -66,37 +66,39 @@ export interface CreateSitePayload {
   fav_icon?: string,
   external_uid?: string,
   lang?: string,
-  site_business_info?: {
-    business_name?: string,
-    address?: {
-      street?: string,
-      city?: string,
-      state?: string,
-      country?: string,
-      zip_code?: string
-    },
-    phone_number?: string,
-    email?: string,
-    opentable_info?: Array<any>
-  },
-  site_alternate_domains?: {
-    domains?: Array<string>,
-    is_redirect?: boolean
-  },
-  site_seo?: {
-    og_image?: string,
-    title?: string,
-    description?: string
-  },
-  schemas?: {
-    local_business?: {
-      enabled?: boolean,
-      status?: 'MISSING_REQUIRED_FIELDS' | 'MISSING_RECOMMENDED_FIELDS' | 'VALID',
-      missing_required_fields?: Array<string>,
-      missing_recommended_fields?: Array<string>
-    }
-  },
   template_id?: number,
+  site_data: {
+    site_business_info?: {
+      business_name?: string,
+      address?: {
+        street?: string,
+        city?: string,
+        state?: string,
+        country?: string,
+        zip_code?: string
+      },
+      phone_number?: string,
+      email?: string,
+      opentable_info?: Array<any>
+    },
+    site_alternate_domains?: {
+      domains?: Array<string>,
+      is_redirect?: boolean
+    },
+    site_seo?: {
+      og_image?: string,
+      title?: string,
+      description?: string
+    },
+    schemas?: {
+      local_business?: {
+        enabled?: boolean,
+        status?: 'MISSING_REQUIRED_FIELDS' | 'MISSING_RECOMMENDED_FIELDS' | 'VALID',
+        missing_required_fields?: Array<string>,
+        missing_recommended_fields?: Array<string>
+      }
+    },
+  }
 }
 
 export interface Site {
