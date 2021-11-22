@@ -514,49 +514,96 @@ export class Duda {
 
   pages: {
     list(
-      opts: Page.ListPagesPayload,
-    ): Promise<Page.ListPagesResponse>;
+      opts: Page.V1.ListPagesPayload,
+    ): Promise<Page.V1.ListPagesResponse>;
 
     list(
-      opts: Page.ListPagesPayload,
-      cb?: CallbackFn<Page.ListPagesResponse>
+      opts: Page.V1.ListPagesPayload,
+      cb?: CallbackFn<Page.V1.ListPagesResponse>
     ): void;
 
     get(
-      opts: Page.GetPagePayload,
-    ): Promise<Page.GetPageResponse>;
+      opts: Page.V1.GetPagePayload,
+    ): Promise<Page.V1.GetPageResponse>;
 
     get(
-      opts: Page.GetPagePayload,
-      cb?: CallbackFn<Page.GetPageResponse>
+      opts: Page.V1.GetPagePayload,
+      cb?: CallbackFn<Page.V1.GetPageResponse>
     ): void;
 
     update(
-      opts: Page.UpdatePagePayload,
-    ): Promise<Page.UpdatePageResponse>;
+      opts: Page.V1.UpdatePagePayload,
+    ): Promise<Page.V1.UpdatePageResponse>;
 
     update(
-      opts: Page.UpdatePagePayload,
-      cb?: CallbackFn<Page.UpdatePageResponse>
+      opts: Page.V1.UpdatePagePayload,
+      cb?: CallbackFn<Page.V1.UpdatePageResponse>
     ): void;
 
     duplicate(
-      opts: Page.DuplicatePagePayload,
-    ): Promise<Page.DuplicatePageResponse>;
+      opts: Page.V1.DuplicatePagePayload,
+    ): Promise<Page.V1.DuplicatePageResponse>;
 
     duplicate(
-      opts: Page.DuplicatePagePayload,
-      cb?: CallbackFn<Page.DuplicatePageResponse>
+      opts: Page.V1.DuplicatePagePayload,
+      cb?: CallbackFn<Page.V1.DuplicatePageResponse>
     ): void;
 
     delete(
-      opts: Page.DeletePagePayload,
-    ): Promise<Page.DeletePageResponse>;
+      opts: Page.V1.DeletePagePayload,
+    ): Promise<Page.V1.DeletePageResponse>;
 
     delete(
-      opts: Page.DeletePagePayload,
-      cb?: CallbackFn<Page.DeletePageResponse>
+      opts: Page.V1.DeletePagePayload,
+      cb?: CallbackFn<Page.V1.DeletePageResponse>
     ): void;
+
+    v2: {
+      list(
+        opts: Page.V2.ListPagesPayload,
+      ): Promise<Page.V2.ListPagesResponse>;
+  
+      list(
+        opts: Page.V2.ListPagesPayload,
+        cb?: CallbackFn<Page.V2.ListPagesResponse>
+      ): void;
+  
+      get(
+        opts: Page.V2.GetPagePayload,
+      ): Promise<Page.V2.GetPageResponse>;
+  
+      get(
+        opts: Page.V2.GetPagePayload,
+        cb?: CallbackFn<Page.V2.GetPageResponse>
+      ): void;
+  
+      update(
+        opts: Page.V2.UpdatePagePayload,
+      ): Promise<Page.V2.UpdatePageResponse>;
+  
+      update(
+        opts: Page.V2.UpdatePagePayload,
+        cb?: CallbackFn<Page.V2.UpdatePageResponse>
+      ): void;
+  
+      duplicate(
+        opts: Page.V2.DuplicatePagePayload,
+      ): Promise<Page.V2.DuplicatePageResponse>;
+  
+      duplicate(
+        opts: Page.V2.DuplicatePagePayload,
+        cb?: CallbackFn<Page.V2.DuplicatePageResponse>
+      ): void;
+  
+      delete(
+        opts: Page.V2.DeletePagePayload,
+      ): Promise<Page.V2.DeletePageResponse>;
+  
+      delete(
+        opts: Page.V2.DeletePagePayload,
+        cb?: CallbackFn<Page.V2.DeletePageResponse>
+      ): void;
+    }
   }
 
   templates: {
